@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <material name="yaskawa_blue">
+    <color rgba="0.12941 0.14902 0.74902 1" />
+  </material>
+  <material name="yaskawa_white">
+    <color rgba="0.99 0.99 0.99 1" />
+  </material>
+</robot>

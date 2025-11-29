@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<robot name="yaskawa_gp7" xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:include filename="gp7_macro.xacro" />
+	<xacro:yaskawa_gp7 prefix=""/>
+</robot>
+
+
