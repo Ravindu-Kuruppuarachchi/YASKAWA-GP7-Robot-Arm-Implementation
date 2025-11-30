@@ -49,6 +49,7 @@ def generate_launch_description():
             '/model/gp7_robot/joint/joint_r/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
             '/model/gp7_robot/joint/joint_b/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
             '/model/gp7_robot/joint/joint_t/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/gripper/attach@std_msgs/msg/Bool]gz.msgs.Boolean',
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'
         ],
         output='screen'

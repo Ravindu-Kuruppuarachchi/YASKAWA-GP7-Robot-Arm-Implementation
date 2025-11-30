@@ -214,30 +214,103 @@
     <origin rpy="0 -1.570796326795 3.14159265359"/>
   </joint>
 
-  <link name="gripper_link">
+
+<joint name="flange_to_robotiq" type="fixed">
+    <parent link="flange"/>
+    <child link="robotiq_85_base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="robotiq_85_base_link">
     <visual>
-      <geometry>
-        <box size="0.05 0.05 0.1"/>
-      </geometry>
-      <material name="grey">
-        <color rgba="0.5 0.5 0.5 1"/>
-      </material>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/robotiq_85_base_link_fine.STL"/></geometry>
+      <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
     </visual>
     <collision>
-      <geometry>
-        <box size="0.05 0.05 0.1"/>
-      </geometry>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/collision/robotiq_85_base_link_coarse.STL"/></geometry>
     </collision>
     <inertial>
-      <mass value="0.1"/>
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      <mass value="0.3"/> <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0002"/>
     </inertial>
   </link>
 
-  <joint name="tool0_to_gripper" type="fixed">
-    <parent link="flange"/> <child link="gripper_link"/>
-    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  <link name="left_outer_knuckle">
+    <visual>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/outer_knuckle_fine.STL"/></geometry>
+      <material name="grey"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/collision/outer_knuckle_coarse.STL"/></geometry>
+    </collision>
+    <inertial><mass value="0.01"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
+  </link>
+  <joint name="finger_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/> <child link="left_outer_knuckle"/>
+    <origin xyz="0.0306 0 0.0627" rpy="0 0 0"/>
   </joint>
+
+  <link name="left_outer_finger">
+    <visual>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/outer_finger_fine.STL"/></geometry>
+      <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/collision/outer_finger_coarse.STL"/></geometry>
+    </collision>
+    <inertial><mass value="0.02"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
+  </link>
+  <joint name="left_outer_finger_joint" type="fixed">
+    <parent link="left_outer_knuckle"/> <child link="left_outer_finger"/>
+    <origin xyz="0.0316 0 -0.0019" rpy="0 0 0"/>
+  </joint>
+
+  <link name="right_outer_knuckle">
+    <visual>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/outer_knuckle_fine.STL"/></geometry>
+      <material name="grey"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/collision/outer_knuckle_coarse.STL"/></geometry>
+    </collision>
+    <inertial><mass value="0.01"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
+  </link>
+  <joint name="right_outer_knuckle_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/> <child link="right_outer_knuckle"/>
+    <origin xyz="-0.0306 0 0.0627" rpy="0 0 3.14159"/>
+  </joint>
+
+  <link name="right_outer_finger">
+    <visual>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/outer_finger_fine.STL"/></geometry>
+      <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://gp7_sim/meshes/robotiq/collision/outer_finger_coarse.STL"/></geometry>
+    </collision>
+    <inertial><mass value="0.02"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
+  </link>
+  <joint name="right_outer_finger_joint" type="fixed">
+    <parent link="right_outer_knuckle"/> <child link="right_outer_finger"/>
+    <origin xyz="0.0316 0 -0.0016" rpy="0 0 0"/>
+  </joint>
+
+  <link name="left_inner_knuckle">
+    <visual><geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/inner_knuckle_fine.STL"/></geometry><material name="black"><color rgba="0.1 0.1 0.1 1"/></material></visual>
+    <inertial><mass value="0.01"/><inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/></inertial>
+  </link>
+  <joint name="left_inner_knuckle_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/> <child link="left_inner_knuckle"/> <origin xyz="0.0127 0 0.0693"/>
+  </joint>
+
+  <link name="right_inner_knuckle">
+    <visual><geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/inner_knuckle_fine.STL"/></geometry><material name="black"><color rgba="0.1 0.1 0.1 1"/></material></visual>
+    <inertial><mass value="0.01"/><inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/></inertial>
+  </link>
+  <joint name="right_inner_knuckle_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/> <child link="right_inner_knuckle"/> <origin xyz="-0.0127 0 0.0693" rpy="0 0 3.14159"/>
+  </joint>
+
+
 <gazebo>
     <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>joint_s</joint_name>
@@ -269,5 +342,13 @@
       <topic>/model/gp7_robot/joint/joint_t/cmd_pos</topic>
       <p_gain>100</p_gain><i_gain>10</i_gain><d_gain>1</d_gain>
     </plugin>
+    <plugin filename="gz-sim-detachable-joint-system" name="gz::sim::systems::DetachableJoint">
+      <parent_link>link_t</parent_link>
+      <child_model>Box_B</child_model>
+      <child_link>link</child_link>
+      <topic>/gripper/attach</topic>
+      <suppress_child_warning>true</suppress_child_warning>
+    </plugin>
+
   </gazebo>
 </robot>
