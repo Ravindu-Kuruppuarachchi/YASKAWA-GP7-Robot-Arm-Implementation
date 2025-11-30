@@ -31,6 +31,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+		'robot_controller = gp7_sim.robot_controller:main',
         ],
     },
 )

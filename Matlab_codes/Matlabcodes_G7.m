@@ -11,8 +11,8 @@ clear; clc; close all;
 
 % 1.1 Define Dimensions (meters) - From Manual [cite: 1103]
 L1_d = 0.330;  L1_a = 0.040;
-L2_a = 0.445;
-L3_u = 0.440;
+L2_a = 0.385;
+L3_u = 0.340;
 L4_d = 0.080;
 Gripper_Len = 0.100; % Estimated gripper length [cite: 20]
 

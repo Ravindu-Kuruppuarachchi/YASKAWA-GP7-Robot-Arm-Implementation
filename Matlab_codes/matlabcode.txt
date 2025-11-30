@@ -96,7 +96,7 @@ fprintf('--> Calculating Trajectories...\n');
 
 % 3.1 Home Position (Straight Up)
 % q=0 is now vertical due to L(2).offset
-q_home = [0, -pi, 0, 0, 0, 0];  
+q_home = [0, -pi, pi/2, 0, 0, 0];  
 weights = [1 1 1 1 1 1];
 
 % 3.2 Inverse Kinematics

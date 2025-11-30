@@ -43,13 +43,13 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/model/gp7_robot/joint/joint_1_s/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/model/gp7_robot/joint/joint_2_l/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/model/gp7_robot/joint/joint_3_u/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/model/gp7_robot/joint/joint_4_r/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/model/gp7_robot/joint/joint_5_b/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/model/gp7_robot/joint/joint_6_t/cmd_pos@std_msgs/msg/Float64]ignition.msgs.Double',
-            '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock'
+            '/model/gp7_robot/joint/joint_s/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/model/gp7_robot/joint/joint_l/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/model/gp7_robot/joint/joint_u/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/model/gp7_robot/joint/joint_r/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/model/gp7_robot/joint/joint_b/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/model/gp7_robot/joint/joint_t/cmd_pos@std_msgs/msg/Float64]gz.msgs.Double',
+            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'
         ],
         output='screen'
     )

@@ -1,6 +1,12 @@
 <?xml version="1.0" ?>
 <robot name="yaskawa_gp7">
+<link name="world"/>
 
+  <joint name="world_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
   <link name="base_link">
     <visual>
       <geometry>
@@ -153,7 +159,7 @@
     <child link="link_s"/>
     <origin xyz="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="1" lower="-2.967" upper="2.967" velocity="6.54"/>
+    <limit effort="1000" lower="-2.967" upper="2.967" velocity="6.54"/>
   </joint>
 
   <joint name="joint_vendor_base" type="fixed">
@@ -167,39 +173,39 @@
     <child link="link_l"/>
     <origin xyz="0.040 0 0.330"/>
     <axis xyz="0 1 0"/>
-    <limit effort="1" lower="-1.134" upper="2.530" velocity="5.49"/>
+    <limit effort="1000" lower="-1.134" upper="2.530" velocity="5.49"/>
   </joint>
 
   <joint name="joint_u" type="revolute">
     <parent link="link_l"/>
     <child link="link_u"/>
     <origin xyz="0 0 0.445"/>
-    <axis xyz="0 -1 0"/>
-    <limit effort="1" lower="-2.024" upper="4.450" velocity="7.15"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" lower="-2.024" upper="4.450" velocity="7.15"/>
   </joint>
 
   <joint name="joint_r" type="revolute">
     <parent link="link_u"/>
     <child link="link_r"/>
     <origin xyz="0.0 0 0.040"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1" lower="-3.316" upper="3.316" velocity="9.59"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000" lower="-3.316" upper="3.316" velocity="9.59"/>
   </joint>
 
   <joint name="joint_b" type="revolute">
     <parent link="link_r"/>
     <child link="link_b"/>
     <origin xyz="0.440 0 0"/>
-    <axis xyz="0 -1 0"/>
-    <limit effort="1" lower="-2.356" upper="2.356" velocity="9.59"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" lower="-2.356" upper="2.356" velocity="9.59"/>
   </joint>
 
   <joint name="joint_t" type="revolute">
     <parent link="link_b"/>
     <child link="link_t"/>
     <origin xyz="0.080 0 0"/>
-    <axis xyz="-1 0 0"/>
-    <limit effort="1" lower="-6.283" upper="6.283" velocity="17.45"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="1000" lower="-6.283" upper="6.283" velocity="17.45"/>
   </joint>
 
   <joint name="joint_flange" type="fixed">
@@ -232,5 +238,36 @@
     <parent link="flange"/> <child link="gripper_link"/>
     <origin xyz="0 0 0.05" rpy="0 0 0"/>
   </joint>
-
+<gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_s</joint_name>
+      <topic>/model/gp7_robot/joint/joint_s/cmd_pos</topic>
+      <p_gain>1000</p_gain><i_gain>100</i_gain><d_gain>50</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_l</joint_name>
+      <topic>/model/gp7_robot/joint/joint_l/cmd_pos</topic>
+      <p_gain>5000</p_gain><i_gain>100</i_gain><d_gain>100</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_u</joint_name>
+      <topic>/model/gp7_robot/joint/joint_u/cmd_pos</topic>
+      <p_gain>3000</p_gain><i_gain>50</i_gain><d_gain>50</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_r</joint_name>
+      <topic>/model/gp7_robot/joint/joint_r/cmd_pos</topic>
+      <p_gain>100</p_gain><i_gain>10</i_gain><d_gain>1</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_b</joint_name>
+      <topic>/model/gp7_robot/joint/joint_b/cmd_pos</topic>
+      <p_gain>100</p_gain><i_gain>10</i_gain><d_gain>1</d_gain>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>joint_t</joint_name>
+      <topic>/model/gp7_robot/joint/joint_t/cmd_pos</topic>
+      <p_gain>100</p_gain><i_gain>10</i_gain><d_gain>1</d_gain>
+    </plugin>
+  </gazebo>
 </robot>
