@@ -244,7 +244,8 @@
     </collision>
     <inertial><mass value="0.01"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
   </link>
-  <joint name="finger_joint" type="fixed">
+  <joint name="finger_joint" type="revolute">
+    <axis xyz="0 -1 0"/> <limit lower="0" upper="0.8" effort="1000" velocity="0.5"/>
     <parent link="robotiq_85_base_link"/> <child link="left_outer_knuckle"/>
     <origin xyz="0.0306 0 0.0627" rpy="0 0 0"/>
   </joint>
@@ -274,7 +275,8 @@
     </collision>
     <inertial><mass value="0.01"/><inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/></inertial>
   </link>
-  <joint name="right_outer_knuckle_joint" type="fixed">
+  <joint name="right_outer_knuckle_joint" type="revolute">
+    <axis xyz="0 -1 0"/> <limit lower="0" upper="0.8" effort="1000" velocity="0.5"/>
     <parent link="robotiq_85_base_link"/> <child link="right_outer_knuckle"/>
     <origin xyz="-0.0306 0 0.0627" rpy="0 0 3.14159"/>
   </joint>
@@ -294,39 +296,25 @@
     <origin xyz="0.0316 0 -0.0016" rpy="0 0 0"/>
   </joint>
 
-  <link name="left_inner_knuckle">
-    <visual><geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/inner_knuckle_fine.STL"/></geometry><material name="black"><color rgba="0.1 0.1 0.1 1"/></material></visual>
-    <inertial><mass value="0.01"/><inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/></inertial>
-  </link>
-  <joint name="left_inner_knuckle_joint" type="fixed">
-    <parent link="robotiq_85_base_link"/> <child link="left_inner_knuckle"/> <origin xyz="0.0127 0 0.0693"/>
-  </joint>
-
-  <link name="right_inner_knuckle">
-    <visual><geometry><mesh filename="package://gp7_sim/meshes/robotiq/visual/inner_knuckle_fine.STL"/></geometry><material name="black"><color rgba="0.1 0.1 0.1 1"/></material></visual>
-    <inertial><mass value="0.01"/><inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/></inertial>
-  </link>
-  <joint name="right_inner_knuckle_joint" type="fixed">
-    <parent link="robotiq_85_base_link"/> <child link="right_inner_knuckle"/> <origin xyz="-0.0127 0 0.0693" rpy="0 0 3.14159"/>
-  </joint>
-
-
-<gazebo>
+  <gazebo>
     <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>joint_s</joint_name>
       <topic>/model/gp7_robot/joint/joint_s/cmd_pos</topic>
       <p_gain>1000</p_gain><i_gain>100</i_gain><d_gain>50</d_gain>
     </plugin>
+    
     <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>joint_l</joint_name>
       <topic>/model/gp7_robot/joint/joint_l/cmd_pos</topic>
-      <p_gain>5000</p_gain><i_gain>100</i_gain><d_gain>100</d_gain>
+      <p_gain>30000</p_gain><i_gain>100</i_gain><d_gain>1000</d_gain>
     </plugin>
+
     <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>joint_u</joint_name>
       <topic>/model/gp7_robot/joint/joint_u/cmd_pos</topic>
-      <p_gain>3000</p_gain><i_gain>50</i_gain><d_gain>50</d_gain>
+      <p_gain>20000</p_gain><i_gain>50</i_gain><d_gain>500</d_gain>
     </plugin>
+
     <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
       <joint_name>joint_r</joint_name>
       <topic>/model/gp7_robot/joint/joint_r/cmd_pos</topic>
@@ -342,13 +330,54 @@
       <topic>/model/gp7_robot/joint/joint_t/cmd_pos</topic>
       <p_gain>100</p_gain><i_gain>10</i_gain><d_gain>1</d_gain>
     </plugin>
-    <plugin filename="gz-sim-detachable-joint-system" name="gz::sim::systems::DetachableJoint">
-      <parent_link>link_t</parent_link>
-      <child_model>Box_B</child_model>
-      <child_link>link</child_link>
-      <topic>/gripper/attach</topic>
-      <suppress_child_warning>true</suppress_child_warning>
+    
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>finger_joint</joint_name>
+      <topic>/model/gp7_robot/joint/finger_joint/cmd_pos</topic>
+      <p_gain>100</p_gain><i_gain>0.1</i_gain><d_gain>0.1</d_gain>
     </plugin>
-
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_outer_knuckle_joint</joint_name>
+      <topic>/model/gp7_robot/joint/right_outer_knuckle_joint/cmd_pos</topic>
+      <p_gain>100</p_gain><i_gain>0.1</i_gain><d_gain>0.1</d_gain>
+    </plugin>
   </gazebo>
+
+  <gazebo reference="left_inner_finger">
+    <surface>
+      <friction>
+        <ode>
+          <mu>1000.0</mu> <mu2>1000.0</mu2>
+        </ode>
+      </friction>
+      <contact>
+        <ode>
+          <kp>100000.0</kp>
+          <kd>1.0</kd>
+          <min_depth>0.002</min_depth>
+        </ode>
+      </contact>
+    </surface>
+  </gazebo>
+
+  <gazebo reference="right_inner_finger">
+    <surface>
+      <friction>
+        <ode>
+          <mu>1000.0</mu> <mu2>1000.0</mu2>
+        </ode>
+      </friction>
+      <contact>
+        <ode>
+          <kp>100000.0</kp>
+          <kd>1.0</kd>
+          <min_depth>0.002</min_depth>
+        </ode>
+      </contact>
+    </surface>
+  </gazebo>
+  
+
+
+
 </robot>
