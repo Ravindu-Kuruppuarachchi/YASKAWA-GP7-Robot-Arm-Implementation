@@ -70,7 +70,7 @@ class GP7Controller(Node):
                 msg = Float64()
                 msg.data = float(q[i])
                 self.pubs[i].publish(msg)
-            time.sleep(0.1) # dt = 0.05
+            time.sleep(0.1) # dt = 0.1
 
     def generate_trapezoidal(self, q_start, q_end, steps, dt=0.05):
         """Trapezoidal Velocity Profile Generator"""
